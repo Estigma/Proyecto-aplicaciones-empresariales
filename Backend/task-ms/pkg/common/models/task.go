@@ -7,4 +7,5 @@ type Task struct {
 	Title       string `json:"title"`
 	Status      string `json:"status"`
 	Description string `json:"description"`
+	UserId      int    `json:"userId"`
 }

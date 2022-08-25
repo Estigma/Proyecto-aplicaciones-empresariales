@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	viper.SetConfigFile("./pkg/common/envs/.env")
+	viper.SetConfigFile("../pkg/common/envs/.env")
 	viper.ReadInConfig()
 
 	port := viper.Get("PORT").(string)

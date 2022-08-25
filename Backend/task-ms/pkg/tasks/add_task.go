@@ -14,6 +14,14 @@ type AddTaskRequestBody struct {
 }
 
 func (h handler) AddTask(c *gin.Context) {
+	tokenString := c.GetHeader("Authorization")
+	userId, err := ValidateToken(tokenString)
+
+	if err != nil {
+		c.JSON(401, gin.H{"error": err.Error()})
+		c.Abort()
+		return
+	}
 	body := AddTaskRequestBody{}
 
 	// getting request's body
@@ -27,6 +35,7 @@ func (h handler) AddTask(c *gin.Context) {
 	task.Title = body.Title
 	task.Status = body.Status
 	task.Description = body.Description
+	task.UserId = userId
 
 	if result := h.DB.Create(&task); result.Error != nil {
 		c.AbortWithError(http.StatusNotFound, result.Error)
